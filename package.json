@@ -1,0 +1,16 @@
+{
+  "author": {
+    "email": "opalmer@me.com",
+    "name":  "Oscar Palmér",
+    "url":   "https://oscar.pm"
+  },
+  "description": "pushstate and popstate-events, but without the \"hassle\".",
+  "homepage": "https://github.com/oscarpalmer/knuff",
+  "license": "MIT",
+  "name": "knuff",
+  "repository": {
+    "type": "git",
+    "url":  "https://github.com/oscarpalmer/knuff.git"
+  },
+  "version": "0.1.0"
+}
