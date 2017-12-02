@@ -5,12 +5,14 @@
     "url":   "https://oscar.pm"
   },
   "description": "pushstate and popstate-events, but without the \"hassle\".",
+  "files": ["src/knuff.js"],
   "homepage": "https://github.com/oscarpalmer/knuff",
   "license": "MIT",
+  "main": "src/knuff.js",
   "name": "knuff",
   "repository": {
     "type": "git",
     "url":  "https://github.com/oscarpalmer/knuff.git"
   },
-  "version": "0.1.0"
+  "version": "0.2.0"
 }
