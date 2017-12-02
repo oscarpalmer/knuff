@@ -1,16 +1,18 @@
-((scope) => {
-  const doc = scope.document;
-  const baseUrl = scope.location.href;
-  const elementPrototype = Element.prototype;
-  const objectPrototype = Object.prototype;
-  const options = {
+'use strict';
+
+(function (scope) {
+  var doc = scope.document;
+  var baseUrl = scope.location.href;
+  var elementPrototype = Element.prototype;
+  var objectPrototype = Object.prototype;
+  var options = {
     baseUrl: scope.location.protocol + '//' + scope.location.host + '/',
     selector: '[data-knuff]',
     onPop: null,
-    onPush: null,
+    onPush: null
   };
 
-  const getLocation = (string) => {
+  var getLocation = function getLocation(string) {
     if (string.substr(0, options.baseUrl.length) === options.baseUrl) {
       return string;
     }
@@ -18,21 +20,21 @@
     return options.baseUrl.replace(/\/*$/, '/') + string.replace(/^\/*/, '');
   };
 
-  const popListener = (event) => {
+  var popListener = function popListener(event) {
     if (event.state && knuffOnPop) {
       options.onPop.call(event, event, event.state.knuff);
     }
   };
 
-  const pushListener = (event) => {
-    const {target} = event;
+  var pushListener = function pushListener(event) {
+    var target = event.target;
 
-    if (target.matches(options.selector) === false ||
-        event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+
+    if (target.matches(options.selector) === false || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
       return;
     }
 
-    let location = target.getAttribute('data-knuff') || target.href || false;
+    var location = target.getAttribute('data-knuff') || target.href || false;
 
     if (location === scope.location.href || location === false) {
       return;
@@ -42,19 +44,19 @@
 
     location = getLocation(location);
 
-    scope.history.pushState({knuff: location}, null, location);
+    scope.history.pushState({ knuff: location }, null, location);
 
     if (knuffOnPush) {
       options.onPush.call(event, event, location);
     }
   };
 
-  const setOptions = (object) => {
+  var setOptions = function setOptions(object) {
     if (objectPrototype.toString.call(object) !== '[object Object]') {
       return;
     }
 
-    for (const property in object) {
+    for (var property in object) {
       if (objectPrototype.hasOwnProperty.call(object, property)) {
         options[property] = object[property];
       }
@@ -69,16 +71,15 @@
     }
   };
 
-  let knuffActive = false;
-  let knuffOnPop = false;
-  let knuffOnPush = false;
+  var knuffActive = false;
+  var knuffOnPop = false;
+  var knuffOnPush = false;
 
   if (typeof elementPrototype.matches === 'undefined') {
-    elementPrototype.matches = elementPrototype.msMatchesSelector ||
-                               elementPrototype.webkitMatchesSelector;
+    elementPrototype.matches = elementPrototype.msMatchesSelector || elementPrototype.webkitMatchesSelector;
   }
 
-  scope.knuff = (userOptions) => {
+  scope.knuff = function (userOptions) {
     if (knuffActive) {
       return;
     }
@@ -90,6 +91,6 @@
     scope.addEventListener('popstate', popListener);
     doc.addEventListener('click', pushListener);
 
-    scope.history.replaceState({knuff: baseUrl}, null, baseUrl);
+    scope.history.replaceState({ knuff: baseUrl }, null, baseUrl);
   };
 })(window);

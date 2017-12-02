@@ -5,8 +5,26 @@
     "url":   "https://oscar.pm"
   },
   "description": "pushstate and popstate-events, but without the \"hassle\".",
-  "files": ["src/knuff.js"],
+  "devDependencies": {
+    "babel-core":           "^6.26.0",
+    "babel-preset-env":     "^1.6.0",
+    "eslint":               "^4.12.0",
+    "eslint-config-google": "^0.9.0",
+    "gulp":                 "^3.9.0",
+    "gulp-babel":           "^7.0.0",
+    "gulp-cli":             "^1.4.0",
+    "gulp-eslint":          "^4.0.0",
+    "gulp-rename":          "^1.2.0"
+  },
+  "files": [
+    "dist/knuff.babel.js",
+    "src/knuff.js"
+  ],
   "homepage": "https://github.com/oscarpalmer/knuff",
+  "keywords": [
+    "history",
+    "pushstate"
+  ],
   "license": "MIT",
   "main": "src/knuff.js",
   "name": "knuff",
@@ -14,5 +32,5 @@
     "type": "git",
     "url":  "https://github.com/oscarpalmer/knuff.git"
   },
-  "version": "0.2.0"
+  "version": "0.3.0"
 }

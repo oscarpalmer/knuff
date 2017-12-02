@@ -12,14 +12,13 @@ However you'd like to &ldquo;install&rdquo; the script, you'll need to add the `
 
 ## Older browsers
 
-_Knuff_ uses a few things introduced in later versions of [ECMAScript](//en.wikipedia.org/wiki/ECMAScript), so if you're unsure of what may or may not be supported, I'd recommend waiting for a newer release where a [Babel](//babeljs.io/)-version is included instead. :v:
+_Knuff_ uses a few things introduced in later versions of [ECMAScript](//en.wikipedia.org/wiki/ECMAScript), so if you're unsure of what may or may not be supported, I'd recommend using [the script](dist/knuff.babel.js) compiled by [Babel](//babeljs.io/). :v:
 
 ## To-do
 
-1. Babel
-2. Minification
-3. Comments
-4. Docs & demo
+1. Minification
+2. Comments
+3. Docs & demo
 
 ## License
 
