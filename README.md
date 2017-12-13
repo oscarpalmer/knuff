@@ -16,8 +16,7 @@ _Knuff_ uses a few things introduced in later versions of [ECMAScript](//en.wiki
 
 ## To-do
 
-1. Comments
-2. Docs & demo
+- Docs & demo
 
 ## License
 
