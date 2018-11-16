@@ -1,36 +1,43 @@
-const gulp = require('gulp');
-const babel = require('gulp-babel');
+const gulp     = require('gulp');
+const babel    = require('gulp-babel');
 const composer = require('gulp-uglify/composer');
-const eslint = require('gulp-eslint');
-const rename = require('gulp-rename');
-const uglify = require('uglify-es');
+const eslint   = require('gulp-eslint');
+const rename   = require('gulp-rename');
+const pump     = require('pump');
+const uglify   = require('uglify-es');
 
 //  Uglify + ES6+
-const minify = composer(uglify, console);
+const minify   = composer(uglify, console);
 
-//  Task for finding errors and problems in Knuff
+//  Task for finding errors and problems in Skrolla
 gulp.task('eslint', () => {
-  return gulp.src('src/knuff.js')
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+  pump([
+    gulp.src('src/knuff.js'),
+    eslint(),
+    eslint.format(),
+    eslint.failAfterError()
+  ]);
 });
 
-//  Task for running Knuff through Babel
-//  after successfully linting the source file
-//  and then minifying it
-gulp.task('babel', ['eslint'], () => {
-  return gulp.src('src/knuff.js')
-    .pipe(babel({ presets: ['env'] }))
-    .pipe(minify())
-    .pipe(rename('knuff.babel.js'))
-    .pipe(gulp.dest('dist'));
-});
-
-//  Task for minifying Knuff after
-//  successfully linting the source file
+//  Task for minifying the
+//  ES6+ friendly version of Skrolla
 gulp.task('minify', ['eslint'], () => {
-  return gulp.src('src/knuff.js')
-    .pipe(minify())
-    .pipe(gulp.dest('dist'));
+  pump([
+    gulp.src('src/knuff.js'),
+    minify(),
+    rename('knuff.js'),
+    gulp.dest('dist')
+  ]);
+});
+
+//  Task for running Skrolla through Babel,
+//  and then minifying it for older browsers
+gulp.task('babel', ['eslint'], () => {
+  pump([
+    gulp.src('src/knuff.js'),
+    babel(),
+    minify(),
+    rename('knuff.babel.js'),
+    gulp.dest('dist')
+  ]);
 });

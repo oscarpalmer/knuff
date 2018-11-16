@@ -5,10 +5,9 @@
   //  Base URL for 'scope'
   const baseUrl = scope.location.href;
 
-  //  Reference for smarter Element functions
+  //  Reference for smarter Array, Element, and Object functions
+  const arrayPrototype = Array.prototype;
   const elementPrototype = Element.prototype;
-
-  //  Reference for smarter Object functions
   const objectPrototype = Object.prototype;
 
   //  Default options for Knuff
@@ -54,13 +53,13 @@
    */
   const pushListener = (event) => {
     //  Easy reference to event target
-    const {target} = event;
+    const { target } = event;
 
     //  The target doesn't match the user defined selector,
     //  or it does, but the click was supplemented by a modifier key,
     //  so let's ignore it
-    if (target.matches(options.selector) === false ||
-        event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+    if (target.matches(options.selector) === false
+        || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
       return;
     }
 
@@ -79,7 +78,7 @@
     location = getLocation(location);
 
     //  Push the location to the browser's history
-    scope.history.pushState({knuff: location}, null, location);
+    scope.history.pushState({ knuff: location }, null, location);
 
     //  Call the user defined callback if it exists
     if (knuffOnPush) {
@@ -99,11 +98,9 @@
     }
 
     //  Override each default option where possible
-    for (const property in object) {
-      if (objectPrototype.hasOwnProperty.call(object, property)) {
-        options[property] = object[property];
-      }
-    }
+    arrayPrototype.forEach.call(Object.keys(object), (key) => {
+      options[key] = object[key];
+    });
 
     //  Handy reference for calling the 'popstate' handler
     if (typeof options.onPop === 'function') {
@@ -127,8 +124,8 @@
 
   //  Tiny polyfill for the 'matches' method
   if (typeof elementPrototype.matches === 'undefined') {
-    elementPrototype.matches = elementPrototype.msMatchesSelector ||
-                               elementPrototype.webkitMatchesSelector;
+    elementPrototype.matches = elementPrototype.msMatchesSelector
+                               || elementPrototype.webkitMatchesSelector;
   }
 
   /**
@@ -156,6 +153,6 @@
     doc.addEventListener('click', pushListener);
 
     //  Define the original URL in the browser's history
-    scope.history.replaceState({knuff: baseUrl}, null, baseUrl);
+    scope.history.replaceState({ knuff: baseUrl }, null, baseUrl);
   };
 })(window);
