@@ -9,20 +9,14 @@
   },
   "description": "pushstate and popstate-events, but without the \"hassle\".",
   "devDependencies": {
-    "@babel/core":            "7.1.x",
-    "@babel/preset-env":      "7.1.x",
-    "eslint":                 "5.9.x",
-    "eslint-config-airbnb":   "17.1.x",
-    "eslint-plugin-import":   "2.14.x",
-    "eslint-plugin-jsx-a11y": "6.1.x",
-    "eslint-plugin-react":    "7.11.x",
-    "gulp":                   "3.9.x",
-    "gulp-babel":             "8.0.x",
-    "gulp-eslint":            "5.0.x",
-    "gulp-rename":            "1.4.x",
-    "gulp-uglify":            "3.0.x",
-    "pump":                   "3.0.x",
-    "uglify-es":              "3.3.x"
+    "@babel/cli": "^7.4.0",
+    "@babel/core": "^7.5.x",
+    "@babel/preset-env": "^7.5.x",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "terser": "^4.1.0",
+    "uglify-js": "^3.6.0"
   },
   "files": [
     "dist/knuff.js"
@@ -39,5 +33,12 @@
     "type": "git",
     "url":  "https://github.com/oscarpalmer/knuff.git"
   },
-  "version": "0.6.0"
+  "scripts": {
+    "babel": "yarn babel:build && yarn babel:minify",
+    "babel:build": "babel src/knuff.js --out-file dist/knuff.babel.js",
+    "babel:minify": "uglifyjs dist/knuff.babel.js -o dist/knuff.babel.js -c -m --comments",
+    "build": "yarn minify && yarn babel",
+    "minify": "terser src/knuff.js -o dist/knuff.js -c -m --comments"
+  },
+  "version": "0.7.0"
 }
